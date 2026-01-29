@@ -4,7 +4,7 @@ import javax.swing.SwingUtilities;
 
 import ui.GameWindow;
 
-// ben was here
+// lindsey was here
 
 /**
  * Class: MainApp
