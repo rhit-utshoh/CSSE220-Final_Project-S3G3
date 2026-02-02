@@ -1,6 +1,7 @@
 package ui;
 
 import app.GameConfig;
+import app.Tile;
 import model.GameModel;
 
 import javax.swing.*;
@@ -63,7 +64,9 @@ public class GameComponent extends JComponent {
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics graphics) {
+        Graphics2D g = (Graphics2D) graphics;
+
         super.paintComponent(g);
 
         //background
@@ -87,5 +90,13 @@ public class GameComponent extends JComponent {
         g.drawString("WASD = move both players together", 10, 40);
         g.drawString("P1 Brain: " + model.getP1().getBrainName(), 10, 60);
         g.drawString("P2 Brain: " + model.getP2().getBrainName() + " (may ignore input sometimes)", 10, 80);
+
+		Tile tile = new Tile(100, 100, Color.darkGray);
+		tile.drawOn(g);
+
+		// Minimal placeholder to test  it’s running
+		g.drawString("Final Project Starter: UI is running ✅", 20, 30);
+		// TODO: draw based on model state
     }
 }
+

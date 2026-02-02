@@ -12,7 +12,7 @@ public class Tile  extends GameObj{
 		private Color color = new Color(165, 42, 42); 
 		private Rectangle newTile; 
 		
-		public void Tile(int x, int y, Color color){
+		public Tile(int x, int y, Color color){
 			this.x = x;
 			this.y = y; 
 			this.color = color; 
