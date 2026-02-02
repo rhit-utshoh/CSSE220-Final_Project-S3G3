@@ -1,20 +1,51 @@
 package app;
 
-public class Player {
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
-    private int x;
-    private int y;
+import javax.imageio.ImageIO;
 
-    private int vx;
-    private int vy;
 
+public class Player implements CognitiveBrain{
+	private int x, y; 
+	private int vx = 2;
+	private int vy = 2;  
+	
+	private static BufferedImage sprite = null;
+	private static boolean triedLoad = false; 
+	private static boolean flipped = false; 
+	
     private final CognitiveBrain brain;
+
+	public void move() {
+		  x += vx;
+		  y += vy;
+		}
+	public void flip() {
+		  vx = -vx;
+		  flipped = true; 
+	}
+	
 
     public Player(int x, int y, CognitiveBrain brain) {
         this.x = x;
         this.y = y;
+        loadSpriteOnce();
         this.brain = brain;
     }
+	
+	private static void loadSpriteOnce() {
+		if (triedLoad) return;
+		triedLoad = true;
+		
+		try {
+			sprite = ImageIO.read(Player.class.getResource("catRight.png"));
+//			sprite = ImageIO.read(Ball.class.getResource("cat.png"));
+		} catch (IOException | IllegalArgumentException ex) 
+			{
+				sprite = null; 
+			}
+		}
 
     public boolean canMoveThisTick() {
         return brain.allowMovement();
