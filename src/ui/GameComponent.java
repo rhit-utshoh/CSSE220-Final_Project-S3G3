@@ -1,6 +1,7 @@
 package ui;
 
 import app.GameConfig;
+import app.Player;
 import app.Tile;
 import model.GameModel;
 
@@ -9,7 +10,18 @@ import java.awt.*;
 
 public class GameComponent extends JComponent {
 
-    private final GameModel model;
+    public static final int WIDTH = 500;
+	public static final int HEIGHT = 200;
+	private int start_x = 250;
+	private int x = start_x;
+	private int y = 20;
+	private int step = 10;
+	private Tile tile; 
+	private Player catLeft, catRight; 
+	private Timer timer;
+	
+	
+	private GameModel model;
 
     private boolean up, down, left, right;
 
@@ -66,9 +78,21 @@ public class GameComponent extends JComponent {
     @Override
     protected void paintComponent(Graphics graphics) {
         Graphics2D g = (Graphics2D) graphics;
-
         super.paintComponent(g);
 
+		setBackground(new Color(72, 150,56));
+		setOpaque(true);
+		//need to make it so these only show based on what direction the cat is going 
+//		catLeft = new Player(100,120); 
+//		catRight = new Player(100, 120); 
+
+		Tile tile = new Tile(100, 100, Color.darkGray);
+		tile.drawOn(g);
+
+		// Minimal placeholder to test  it’s running
+		g.drawString("Final Project Starter: UI is running ✅", 20, 30);
+		// TODO: draw based on model state
+        
         //background
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, getWidth(), getHeight());
@@ -91,12 +115,20 @@ public class GameComponent extends JComponent {
         g.drawString("P1 Brain: " + model.getP1().getBrainName(), 10, 60);
         g.drawString("P2 Brain: " + model.getP2().getBrainName() + " (may ignore input sometimes)", 10, 80);
 
-		Tile tile = new Tile(100, 100, Color.darkGray);
-		tile.drawOn(g);
+	public void moveLeft() {
+		  x -= step;
+		  repaint();
+		}
 
-		// Minimal placeholder to test  it’s running
-		g.drawString("Final Project Starter: UI is running ✅", 20, 30);
-		// TODO: draw based on model state
-    }
+		public void moveRight() {
+		  x += step;
+		  repaint();
+		}
+
+		public void reset() {
+		  x = start_x;
+		  repaint();
+		}
+	
 }
 

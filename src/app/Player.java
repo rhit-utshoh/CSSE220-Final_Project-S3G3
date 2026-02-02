@@ -6,16 +6,21 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 
-public class Player implements CognitiveBrain{
+public class Player {
 	private int x, y; 
 	private int vx = 2;
 	private int vy = 2;  
+	private CognitiveBrain brain;
 	
 	private static BufferedImage sprite = null;
+	private int dx = 2;
+	private int dy = 2;  
+	private static BufferedImage sprite1 = null;
+	private static BufferedImage sprite2 = null;
+
 	private static boolean triedLoad = false; 
 	private static boolean flipped = false; 
 	
-    private final CognitiveBrain brain;
 
 	public void move() {
 		  x += vx;
@@ -24,26 +29,39 @@ public class Player implements CognitiveBrain{
 	public void flip() {
 		  vx = -vx;
 		  flipped = true; 
-	}
-	
+	}	
 
     public Player(int x, int y, CognitiveBrain brain) {
         this.x = x;
         this.y = y;
-        loadSpriteOnce();
+        loadSprite1Once();
+        loadSprite2Once();
         this.brain = brain;
     }
 	
-	private static void loadSpriteOnce() {
+
+	private static void loadSprite1Once() {
 		if (triedLoad) return;
 		triedLoad = true;
 		
 		try {
-			sprite = ImageIO.read(Player.class.getResource("catRight.png"));
+			sprite1 = ImageIO.read(Player.class.getResource("catRight.png"));
 //			sprite = ImageIO.read(Ball.class.getResource("cat.png"));
 		} catch (IOException | IllegalArgumentException ex) 
 			{
-				sprite = null; 
+				sprite1 = null; 
+			}
+		}
+	private static void loadSprite2Once() {
+		if (triedLoad) return;
+		triedLoad = true;
+		
+		try {
+			sprite2 = ImageIO.read(Player.class.getResource("catLeft.png"));
+//			sprite = ImageIO.read(Ball.class.getResource("cat.png"));
+		} catch (IOException | IllegalArgumentException ex) 
+			{
+				sprite2 = null; 
 			}
 		}
 
