@@ -1,9 +1,9 @@
 package ui;
 
-import app.GameConfig;
-import app.Player;
-import app.Tile;
+import model.GameConfig;
 import model.GameModel;
+import model.Player;
+import model.Tile;
 
 import javax.swing.*;
 import java.awt.*;

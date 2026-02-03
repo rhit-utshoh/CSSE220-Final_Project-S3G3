@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 
-import app.Menu;
+import model.Menu;
 
 
 public class Controller extends JComponent{

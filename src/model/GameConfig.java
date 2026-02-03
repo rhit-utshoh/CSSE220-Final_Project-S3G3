@@ -1,4 +1,4 @@
-package app;
+package model;
 
 public class GameConfig {
     public static final int WIDTH = 600;
