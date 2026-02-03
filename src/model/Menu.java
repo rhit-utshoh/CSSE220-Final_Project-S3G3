@@ -1,5 +1,7 @@
 package model;
 
+import java.io.IOException;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -10,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class Menu extends JPanel{
+	private boolean triedLoad;
 	private Image healthPoints;
 	private Image brainPoints; 
 	private int levelNum;
@@ -19,12 +22,24 @@ public class Menu extends JPanel{
 		setLayout(new FlowLayout(FlowLayout.CENTER));
 		setBackground(Color.pink); 
 		
-		healthPoints = ImageIO.read(Menu.class.getResource("healthPts.png")); 
-		brainPoints = ImageIO.read(Player.class.getResource("grainPts.png"));
+		loadImagesOnce();
 		levelNum = 1; 
+	}
+	
+	private void loadImagesOnce() {
+		if (triedLoad) return;
+		triedLoad = true;
 		
-		add(healthPoints);
-		add(levelNum);
+		try {
+			healthPoints = ImageIO.read(Menu.class.getResource("healthPts.png")); 
+			brainPoints = ImageIO.read(Player.class.getResource("grainPts.png"));
+		}
+		catch (IOException | IllegalArgumentException e) {
+			healthPoints = null;
+			brainPoints = null;
+			System.out.println("couldn't load images");
+
+		}
 	}
 	public Image healthPoints(){
 		return healthPoints;

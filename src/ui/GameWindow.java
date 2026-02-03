@@ -12,7 +12,7 @@ public class GameWindow {
         JFrame frame = new JFrame("CSSE220 Final Project - Milestone 1");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        frame.setConten\tPane(new GameComponent(model));
+        frame.setContentPane(new GameComponent(model));
         frame.pack();
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);

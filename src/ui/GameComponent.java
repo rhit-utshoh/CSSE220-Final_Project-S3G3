@@ -82,9 +82,6 @@ public class GameComponent extends JComponent {
 
 		setBackground(new Color(72, 150,56));
 		setOpaque(true);
-		//need to make it so these only show based on what direction the cat is going 
-//		catLeft = new Player(100,120); 
-//		catRight = new Player(100, 120); 
 
 		Tile tile = new Tile(100, 100, Color.darkGray);
 		tile.drawOn(g);
@@ -114,7 +111,7 @@ public class GameComponent extends JComponent {
         g.drawString("WASD = move both players together", 10, 40);
         g.drawString("P1 Brain: " + model.getP1().getBrainName(), 10, 60);
         g.drawString("P2 Brain: " + model.getP2().getBrainName() + " (may ignore input sometimes)", 10, 80);
-
+    }
 	public void moveLeft() {
 		  x -= step;
 		  repaint();
