@@ -1,14 +1,5 @@
 package app;
 
-<<<<<<< HEAD
-public class Player implements CognitiveBrain{
-	
-	
-	public Player() {
-		
-	}
-
-=======
 public class Player {
 
     private int x;
@@ -54,5 +45,4 @@ public class Player {
     public String getBrainName() {
         return brain.getClass().getSimpleName();
     }
->>>>>>> utsho_branch
 }
