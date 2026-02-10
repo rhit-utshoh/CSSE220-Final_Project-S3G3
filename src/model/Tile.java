@@ -1,4 +1,5 @@
 package app;
+package model;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -57,6 +58,19 @@ public class Tile  extends GameObj{
 			g2.fill(brickTile);
 		}
 
+		private Rectangle newTile; 
+		
+		public Tile(int x, int y, Color color){
+			this.x = x;
+			this.y = y; 
+			this.color = color; 
+			newTile = new Rectangle(x, y, WIDTH, HEIGHT);
+			
+		}
+		
+		public void drawOn(Graphics2D g2){
+			g2.setColor(color);
+			g2.fill(newTile);
 		}
 	
 }

@@ -1,6 +1,8 @@
 package ui;
 
-import app.GameConfig;
+// Fixed the code key-binding code from milestone 1 using 220 materials
+
+import model.GameConfig;
 import model.GameModel;
 
 import javax.swing.*;
@@ -33,59 +35,68 @@ public class GameComponent extends JComponent {
         requestFocusInWindow();
     }
 
-    private void setupKeyBindings() {
-        bind("pressed W", () -> up = true);
-        bind("released W", () -> up = false);
-
-        bind("pressed S", () -> down = true);
-        bind("released S", () -> down = false);
-
-        bind("pressed A", () -> left = true);
-        bind("released A", () -> left = false);
-
-        bind("pressed D", () -> right = true);
-        bind("released D", () -> right = false);
-
-        bind("pressed P", model::togglePause);
-    }
-
-    private void bind(String keyStroke, Runnable action) {
-        InputMap im = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-        ActionMap am = getActionMap();
-
-        im.put(KeyStroke.getKeyStroke(keyStroke), keyStroke);
-        am.put(keyStroke, new AbstractAction() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                action.run();
-            }
-        });
-    }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        //background
+        //Basic white Background for now
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, getWidth(), getHeight());
 
-        //draw players
         int s = GameConfig.PLAYER_SIZE;
 
-        //Player 1 (Neurotypical) - Blue
+        //Player 1 (Neurotypical)-Blue Square for now
         g.setColor(Color.BLUE);
         g.fillRect(model.getP1().getX(), model.getP1().getY(), s, s);
 
-        //Player 2 (ADHD) - Red
+        // Player 2 (ADHD) - Red Square for now
         g.setColor(Color.RED);
         g.fillRect(model.getP2().getX(), model.getP2().getY(), s, s);
 
-        //HUD
+        // HUD
         g.setColor(Color.BLACK);
-        g.drawString("State: " + model.getState() + "   (P = Pause)", 10, 20);
+        g.drawString("State: " + model.getState(), 10, 20);
         g.drawString("WASD = move both players together", 10, 40);
         g.drawString("P1 Brain: " + model.getP1().getBrainName(), 10, 60);
-        g.drawString("P2 Brain: " + model.getP2().getBrainName() + " (may ignore input sometimes)", 10, 80);
+        g.drawString("P2 Brain: " + model.getP2().getBrainName(), 10, 80);
     }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_W) {
+            up = true;
+        } else if (key == KeyEvent.VK_S) {
+            down = true;
+        } else if (key == KeyEvent.VK_A) {
+            left = true;
+        } else if (key == KeyEvent.VK_D) {
+            right = true;
+        } else if (key == KeyEvent.VK_P) {
+            model.togglePause();
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_W) {
+            up = false;
+        } else if (key == KeyEvent.VK_S) {
+            down = false;
+        } else if (key == KeyEvent.VK_A) {
+            left = false;
+        } else if (key == KeyEvent.VK_D) {
+            right = false;
+        }
+    }
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}	   	
 }

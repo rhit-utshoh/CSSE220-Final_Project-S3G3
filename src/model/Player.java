@@ -9,6 +9,40 @@ public class Player {
     private int vy;
 
     private final CognitiveBrain brain;
+package model;
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import brain.CognitiveBrain;
+
+
+public class Player {
+	private int x, y; 
+	private int vx = 2;
+	private int vy = 2;  
+	private CognitiveBrain brain;
+	
+	private static BufferedImage sprite = null;
+	private int dx = 2;
+	private int dy = 2;  
+	private static BufferedImage sprite1 = null;
+	private static BufferedImage sprite2 = null;
+
+	private static boolean triedLoad = false; 
+	private static boolean flipped = false; 
+	
+
+	public void move() {
+		  x += vx;
+		  y += vy;
+		}
+	public void flip() {
+		  vx = -vx;
+		  flipped = true; 
+	}	
 
     public Player(int x, int y, CognitiveBrain brain) {
         this.x = x;
