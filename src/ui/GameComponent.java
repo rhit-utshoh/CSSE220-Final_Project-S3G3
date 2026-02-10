@@ -1,26 +1,28 @@
 package ui;
 
-// Fixed the code key-binding code from milestone 1 using 220 materials
-
 import model.GameConfig;
 import model.GameModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class GameComponent extends JComponent {
+public class GameComponent extends JComponent implements KeyListener {
 
     private final GameModel model;
 
-    private boolean up, down, left, right;
+    private boolean up;
+    private boolean down;
+    private boolean left;
+    private boolean right;
 
     public GameComponent(GameModel model) {
         this.model = model;
 
         setPreferredSize(new Dimension(GameConfig.WIDTH, GameConfig.HEIGHT));
         setFocusable(true);
-
-        setupKeyBindings();
+        addKeyListener(this);
 
         Timer timer = new Timer(16, e -> {
             model.update(up, down, left, right);
@@ -35,22 +37,21 @@ public class GameComponent extends JComponent {
         requestFocusInWindow();
     }
 
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        //Basic white Background for now
+        // Background
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, getWidth(), getHeight());
 
         int s = GameConfig.PLAYER_SIZE;
 
-        //Player 1 (Neurotypical)-Blue Square for now
+        // Player 1 (Neurotypical) - Blue box for now
         g.setColor(Color.BLUE);
         g.fillRect(model.getP1().getX(), model.getP1().getY(), s, s);
 
-        // Player 2 (ADHD) - Red Square for now
+        // Player 2 (ADHD) - Red for now
         g.setColor(Color.RED);
         g.fillRect(model.getP2().getX(), model.getP2().getY(), s, s);
 
@@ -61,8 +62,7 @@ public class GameComponent extends JComponent {
         g.drawString("P1 Brain: " + model.getP1().getBrainName(), 10, 60);
         g.drawString("P2 Brain: " + model.getP2().getBrainName(), 10, 80);
     }
-
-    @Override
+    
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 
@@ -79,7 +79,6 @@ public class GameComponent extends JComponent {
         }
     }
 
-    @Override
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
 
@@ -94,9 +93,7 @@ public class GameComponent extends JComponent {
         }
     }
 
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}	   	
+    public void keyTyped(KeyEvent e) {
+        // Not used
+    }
 }
