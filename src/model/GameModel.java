@@ -36,6 +36,7 @@ public class GameModel {
             p2.setVelocity(0, 0);
             return;
         }
+        //what 
 
         int vx = (right ? GameConfig.PLAYER_SPEED : 0) - (left ? GameConfig.PLAYER_SPEED : 0);
         int vy = (down ? GameConfig.PLAYER_SPEED : 0) - (up ? GameConfig.PLAYER_SPEED : 0);

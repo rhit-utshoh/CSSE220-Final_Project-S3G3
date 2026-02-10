@@ -1,5 +1,5 @@
 package ui;
-
+//instead of game model can we take in drawing component 
 import model.GameModel;
 
 import javax.swing.*;

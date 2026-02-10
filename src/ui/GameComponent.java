@@ -34,7 +34,8 @@ public class GameComponent extends JComponent {
         super.addNotify();
         requestFocusInWindow();
     }
-
+//what?
+		
     private void setupKeyBindings() {
         bind("pressed W", () -> up = true);
         bind("released W", () -> up = false);

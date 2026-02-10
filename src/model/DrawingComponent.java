@@ -10,7 +10,7 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 import model.Tile;
 
-
+// i want this to be the screen that is the background so all other things will be in game component pasted on top of this. 
 public class DrawingComponent extends JPanel{
 	
 
@@ -26,6 +26,10 @@ public class DrawingComponent extends JPanel{
         stoneTile = new Tile(1, 0, 1); 
 
 	}
+	
+	//just to keep track of the level we are on 
+	
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		  super.paintComponent(g);
