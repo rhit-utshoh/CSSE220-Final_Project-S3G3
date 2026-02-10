@@ -1,7 +1,11 @@
 package model;
 
+import model.GameConfig;
+import model.Player;
+
 import brain.ADHDBrain;
 import brain.NeurotypicalBrain;
+
 
 public class GameModel {
 

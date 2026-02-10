@@ -1,7 +1,5 @@
 package ui;
 
-// Fixed the code key-binding code from milestone 1 using 220 materials
-
 import model.GameConfig;
 import model.GameModel;
 
@@ -30,7 +28,6 @@ public class GameComponent extends JComponent implements KeyListener {
             model.update(up, down, left, right);
             repaint();
         });
-        
         timer.start();
     }
 
@@ -44,17 +41,17 @@ public class GameComponent extends JComponent implements KeyListener {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        //Basic white Background for now
+        // Background
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, getWidth(), getHeight());
 
         int s = GameConfig.PLAYER_SIZE;
 
-        //Player 1 (Neurotypical)-Blue Square for now
+        // Player 1 (Neurotypical) - Blue box for now
         g.setColor(Color.BLUE);
         g.fillRect(model.getP1().getX(), model.getP1().getY(), s, s);
 
-        // Player 2 (ADHD) - Red Square for now
+        // Player 2 (ADHD) - Red for now
         g.setColor(Color.RED);
         g.fillRect(model.getP2().getX(), model.getP2().getY(), s, s);
 
@@ -65,8 +62,7 @@ public class GameComponent extends JComponent implements KeyListener {
         g.drawString("P1 Brain: " + model.getP1().getBrainName(), 10, 60);
         g.drawString("P2 Brain: " + model.getP2().getBrainName(), 10, 80);
     }
-
-    @Override
+    
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 
@@ -83,7 +79,6 @@ public class GameComponent extends JComponent implements KeyListener {
         }
     }
 
-    @Override
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
 
@@ -98,9 +93,22 @@ public class GameComponent extends JComponent implements KeyListener {
         }
     }
 
-	@Override
-	public void keyTyped(KeyEvent e) {
+    public void keyTyped(KeyEvent e) {
+        // Not used
+    }
+
+	public void moveLeft() {
 		// TODO Auto-generated method stub
 		
-	}	   	
+	}
+
+	public void reset() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void moveRight() {
+		// TODO Auto-generated method stub
+		
+	}
 }
