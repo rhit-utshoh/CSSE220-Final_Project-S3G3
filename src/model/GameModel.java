@@ -1,9 +1,9 @@
 package model;
 
-import app.ADHDBrain;
-import app.GameConfig;
-import app.NeurotypicalBrain;
-import app.Player;
+import brain.ADHDBrain;
+import model.GameConfig;
+import brain.NeurotypicalBrain;
+import model.Player;
 
 public class GameModel {
 

@@ -1,13 +1,14 @@
-package app;
+package model;
 
 import java.awt.BasicStroke;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
-import app.Tile;
+import model.Tile;
 
 
 public class DrawingComponent extends JPanel{
@@ -25,6 +26,6 @@ public class DrawingComponent extends JPanel{
 	protected void paintComponent(Graphics g) {
 		  super.paintComponent(g);
 		  Graphics2D g2 = (Graphics2D) g;
-		  grassTile.draw(g2);
+		  grassTile.drawOn(g2);
 	}
 }

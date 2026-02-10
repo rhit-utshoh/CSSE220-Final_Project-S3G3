@@ -1,4 +1,4 @@
-package app;
+package model;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -56,7 +56,6 @@ public class Tile  extends GameObj{
 			g2.fill(grassTile);
 			g2.fill(brickTile);
 		}
-
 		}
 	
 }

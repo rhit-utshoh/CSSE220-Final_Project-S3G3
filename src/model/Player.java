@@ -1,5 +1,5 @@
-package app;
-
+package model;
+import brain.CognitiveBrain; 
 public class Player {
 
     private int x;

@@ -1,9 +1,11 @@
 package ui;
 
-import app.GameConfig;
 import model.GameModel;
 
 import javax.swing.*;
+
+import model.GameConfig;
+
 import java.awt.*;
 
 public class GameComponent extends JComponent {
