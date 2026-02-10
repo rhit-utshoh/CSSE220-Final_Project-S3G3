@@ -1,4 +1,4 @@
-package app;
+package brain;
 
 import java.util.Random;
 

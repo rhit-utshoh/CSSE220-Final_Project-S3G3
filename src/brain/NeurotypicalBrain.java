@@ -1,4 +1,4 @@
-package app;
+package brain;
 
 public class NeurotypicalBrain implements CognitiveBrain {
 
