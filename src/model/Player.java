@@ -16,7 +16,7 @@ public class Player {
         this.brain = brain;
     }
 
-    public boolean canMoveThisTick() {
+    public boolean canMove() {
         return brain.allowMovement();
     }
 
@@ -26,21 +26,36 @@ public class Player {
     }
 
     public void update() {
+    	if (!this.canMove()) {
+    		vx = 0;
+    		vy = 0;
+    		return;
+    	}
         x += vx;
         y += vy;
 
         // clamp to window bounds
         int maxX = GameConfig.WIDTH - GameConfig.PLAYER_SIZE;
         int maxY = GameConfig.HEIGHT - GameConfig.PLAYER_SIZE;
+        
+        int player_left_edge = x - GameConfig.PLAYER_SIZE;
+        int player_right_edge = x + GameConfig.PLAYER_SIZE;
+        int player_top_edge = y - GameConfig.PLAYER_SIZE;
+        int player_bottom_edge = y + GameConfig.PLAYER_SIZE;
+        
+        if (player_left_edge < 0) x = GameConfig.PLAYER_SIZE;
+        if (player_right_edge > maxX) x = maxX - GameConfig.PLAYER_SIZE;
 
-        if (x < 0) x = 0;
-        if (y < 0) y = 0;
-        if (x > maxX) x = maxX;
-        if (y > maxY) y = maxY;
+        if (player_top_edge < 0) y = GameConfig.PLAYER_SIZE;
+        if (player_bottom_edge > maxY) y = maxY - GameConfig.PLAYER_SIZE;
     }
 
-    public int getX() { return x; }
-    public int getY() { return y; }
+    public int getX() { 
+    	return x; 
+    }
+    public int getY() { 
+    	return y; 
+    }
 
     public String getBrainName() {
         return brain.getClass().getSimpleName();
