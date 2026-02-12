@@ -4,16 +4,12 @@ import javax.swing.SwingUtilities;
 
 import ui.GameWindow;
 
-// lindsey was here
 
 /**
  * Class: MainApp
-<<<<<<< HEAD
- * @author 3g3
-=======
+ * @author g3
  * @author s3g3
->>>>>>> utsho_branch
- * <br>Purpose: Top level class for CSSE220 Project containing main method 
+ * Purpose: Top level class for CSSE220 Project containing main method 
  * Entry point for the final project.
  */
 
