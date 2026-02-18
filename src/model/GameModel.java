@@ -9,7 +9,7 @@ public class GameModel {
 
     private final Player p1;
     private final Player p2;
-
+    
     private GameState state = GameState.PLAYING;
 
     public GameModel() {
@@ -37,7 +37,7 @@ public class GameModel {
             return;
         }
         //what 
-
+        
         int vx = (right ? GameConfig.PLAYER_SPEED : 0) - (left ? GameConfig.PLAYER_SPEED : 0);
         int vy = (down ? GameConfig.PLAYER_SPEED : 0) - (up ? GameConfig.PLAYER_SPEED : 0);
 

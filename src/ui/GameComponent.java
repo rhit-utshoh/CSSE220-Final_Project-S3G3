@@ -68,6 +68,7 @@ public class GameComponent extends JComponent {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        
 
         //background
         g.setColor(Color.WHITE);
