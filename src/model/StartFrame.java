@@ -1,25 +1,24 @@
 package model;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 
 import javax.swing.*;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-
-import javax.swing.JFrame;
 
 public class StartFrame extends JFrame {
 		
 		private JLabel title = new JLabel("GAME TITLE"); 
 		private JButton startButton = new JButton(); 
-		Color bgColor = new Color(255, 240,204); 
-		Color  btnColor = new Color(255, 216, 224); 
+		Color bgColor = new Color(200, 220, 240);
+		Color btnColor = new Color(248, 208, 218); 
+		Color txtColor = new Color(175, 150, 210); 
 		Color btnHov = new Color(207, 196, 255); 
 		Color btnHovBorder = new Color(152, 169, 255); 
 
@@ -31,35 +30,28 @@ public class StartFrame extends JFrame {
 			setSize(900,700);
 			 JPanel panel = new JPanel(); 
 			 panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-			 panel.setBorder(BorderFactory.createEmptyBorder(24, 24, 24, 24));
-			 panel.setBackground(new Color(255, 240,204));
-			 // maybe i can make a litle translucent panel.setOpaque(true)
-			 panel.setPreferredSize(new Dimension(900, 700)); 
+			 panel.setBackground(bgColor);
+			 panel.setOpaque(true);
+			 panel.setPreferredSize(new Dimension(900, 700));
+
 			 
-			 title.setFont(new Font("Comic Sans MS", Font.BOLD, 28));
-			 title.setForeground(new Color(255, 105, 180)); 
+			 title.setFont(new Font("Comic Sans MS", Font.BOLD, 30));
+			 title.setForeground(txtColor); 
 			 title.setAlignmentY(TOP_ALIGNMENT);				
 			
-			startButton = new JButton("PLAY"); 			
+			startButton = new JButton("PLAY"); 
+			startButton.setForeground(txtColor); 
 			startButton.setBackground(btnColor);
 
-	        startButton.setAlignmentY(CENTER_ALIGNMENT);
-
-			startButton.setSize(70, 25);
-			startButton.setText("start");
-			 
-			 @Override 
-			 protected void paintComponent(Graphics g) {
-	                super.paintComponent(g);
-	                setBackground(Color.pink);  // Light pink
-	            }
-					
-		
-			
-			
+//	        startButton.setAlignmentY(CENTER_ALIGNMENT); 
+			startButton.setSize(500,100); //the size wil not listen to this as its doing any size it wants
+			startButton.setFont(new Font("Comic Sans MS", Font.BOLD, 28));
+			startButton.setBorder(BorderFactory.createLineBorder(btnColor, 6)); 
+	        startButton.setMinimumSize(new Dimension(400, 100));
+			startButton.setText("Start"); 		
 			startButton.addActionListener(e -> {
 				JOptionPane.showMessageDialog(startButton, "Starting");
-//				State = playing; 
+//				State = playing; need to pull up the actual game screen here!!
 			});
 			
 			MouseAdapter hover = new MouseAdapter() {
@@ -68,20 +60,34 @@ public class StartFrame extends JFrame {
 					JButton button = (JButton) e.getComponent();
 							
 	                button.setBackground(btnHov);
-	                button.setForeground(btnHov);
+	                button.setForeground(btnColor);
 	                button.setBorder(BorderFactory.createLineBorder(btnHovBorder, 2));				
 	                }
 	            @Override
 	            public void mouseExited(MouseEvent e) {
 					JButton button = (JButton) e.getComponent();
-	                button.setBackground(bgColor);
-	                button.setForeground(btnColor);
+	                button.setBackground(btnColor);
+	                button.setForeground(txtColor);
 	            }
 			};		
 			startButton.addMouseListener(hover);
+			
+			title.setAlignmentX(Component.CENTER_ALIGNMENT);
+			startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+			panel.add(Box.createVerticalStrut(8));
 			panel.add(title);
+			panel.add(Box.createVerticalStrut(24));
+			panel.add(Box.createVerticalGlue());
 			panel.add(startButton);
-			setContentPane(panel); 
+			panel.add(Box.createVerticalGlue());
+
+		// took so very long but the grid layout allows me to center the buttons and i am able to set the button and title to be where i want 
+		JPanel root = new JPanel(new GridBagLayout());
+		root.setBackground(Color.BLACK);
+		
+		root.add(panel);  
+		setContentPane(root);
+
 
 		}
 	}

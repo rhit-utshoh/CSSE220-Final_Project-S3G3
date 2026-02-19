@@ -38,16 +38,6 @@ public class DrawingComponent extends JPanel{
 		  int tileH = getHeight() / rows;
 		 
 
-//		  if(row == 5 )
-		  //checkerboard 
-		  
-//		  for (int y = 0; y < rows; y++) {
-//		         for (int x = 0; x < cols; x++) {
-//		             // choose grass/stone, etc. based on map logic
-//		             (someTile).drawOn(g2, tileW, tileH, x, y); // depends on your Tile API
-//		         }
-//		     }
-
 	      grassTile.drawOn(g2, tileW, tileH);
 	      stoneTile.drawOn(g2, tileW, tileH);
 
