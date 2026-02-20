@@ -12,4 +12,8 @@ public class GameObj {
 		
 		}
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> branch 'm3_lindsey' of https://github.com/rhit-utshoh/CSSE220-Final_Project-S3G3.git

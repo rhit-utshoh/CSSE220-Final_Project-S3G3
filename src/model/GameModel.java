@@ -1,14 +1,24 @@
 package model;
 
+<<<<<<< HEAD
 import model.GameConfig;
 import model.Player;
 
 import brain.ADHDBrain;
 import brain.NeurotypicalBrain;
 
+=======
+import brain.ADHDBrain;
+
+import model.GameConfig;
+import brain.NeurotypicalBrain;
+
+import model.Player;
+>>>>>>> branch 'm3_lindsey' of https://github.com/rhit-utshoh/CSSE220-Final_Project-S3G3.git
 
 public class GameModel {
 
+<<<<<<< HEAD
     private final Player p1;
     private final Player p2;
 
@@ -54,4 +64,11 @@ public class GameModel {
 
     public Player getP1() { return p1; }
     public Player getP2() { return p2; }
+=======
+    private GameState state = GameState.PLAYING;
+
+    public GameModel() {
+
+    }
+>>>>>>> branch 'm3_lindsey' of https://github.com/rhit-utshoh/CSSE220-Final_Project-S3G3.git
 }
