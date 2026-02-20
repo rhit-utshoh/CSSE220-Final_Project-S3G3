@@ -1,4 +1,7 @@
 package model;
+import java.awt.Color;
+import java.awt.Graphics2D;
+
 import brain.CognitiveBrain; 
 public class Player {
 
@@ -59,5 +62,12 @@ public class Player {
 
     public String getBrainName() {
         return brain.getClass().getSimpleName();
+    }
+    
+    public void drawOn(Graphics2D g2, Color c) {
+        int s = GameConfig.PLAYER_SIZE;
+
+        g2.setColor(c);
+        g2.fillRect(x-s/2, y-s/2, s, s);
     }
 }
