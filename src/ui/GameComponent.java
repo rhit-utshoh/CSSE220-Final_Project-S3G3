@@ -3,6 +3,7 @@ package ui;
 import model.GameModel;
 import model.GameState;
 import model.Player;
+import model.Tile;
 
 import javax.swing.*;
 import model.GameConfig;
@@ -25,6 +26,7 @@ public class GameComponent extends JPanel {
     private int speed = GameConfig.PLAYER_SPEED;
     
     private ArrayList<Player> players = new ArrayList<>();
+    private Tile grassTile, stoneTile;
     
     private boolean left, right, up, down;
     private int vx, vy;
@@ -39,12 +41,16 @@ public class GameComponent extends JPanel {
         players.add(p1);
         players.add(p2);
         
+		grassTile = new Tile(0, 0, 0); 
+        stoneTile = new Tile(1, 0, 1); 
+        
         Timer timer = new Timer(50, e -> {
         	for (Player p : players) {
-        		if (state == GameState.PLAYING)
-        			vx = (right ? GameConfig.PLAYER_SPEED : 0) - (left ? GameConfig.PLAYER_SPEED : 0);
-                	vy = (down ? GameConfig.PLAYER_SPEED : 0) - (up ? GameConfig.PLAYER_SPEED : 0);
+        		if (state == GameState.PLAYING) {
+        			vx = (right ? speed : 0) - (left ? speed : 0);
+                	vy = (down ? speed : 0) - (up ? speed : 0);
         			p.setVelocity(vx, vy);
+        		}
         		p.update();
         	}
         	repaint();
@@ -83,16 +89,16 @@ public class GameComponent extends JPanel {
     	@Override
     	public void keyReleased(KeyEvent e) {
     		switch (e.getKeyCode()) {
-    		case KeyEvent.VK_UP:
+    		case KeyEvent.VK_W: case KeyEvent.VK_UP:
     			up = false;
     			break;
-    		case KeyEvent.VK_DOWN:
+    		case KeyEvent.VK_S: case KeyEvent.VK_DOWN:
     			down = false;
     			break;
-    		case KeyEvent.VK_LEFT:
+    		case KeyEvent.VK_A: case KeyEvent.VK_LEFT:
     			left = false;
     			break;
-    		case KeyEvent.VK_RIGHT:
+    		case KeyEvent.VK_D: case KeyEvent.VK_RIGHT:
     			right = false;
     			break;
     		}
@@ -101,25 +107,24 @@ public class GameComponent extends JPanel {
     	
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
+	    super.paintComponent(g);
+	    Graphics2D g2 = (Graphics2D) g;
+	    
+		int tileW = getWidth() / 5;
+		int tileH = getHeight() / 5;
+		grassTile.drawOn(g2, tileW, tileH);
+		stoneTile.drawOn(g2, tileW, tileH);
+		
+	    p1.drawOn(g2, Color.BLUE);
+	    p2.drawOn(g2, Color.RED);
+	    
         
-        //draw players
-        int s = GameConfig.PLAYER_SIZE;
-
-        //Player 1 (Neurotypical) - Blue
-        g2.setColor(Color.BLUE);
-        g2.fillRect(p1.getX()-s/2, p1.getY()-s/2, s, s);
-
-        //Player 2 (ADHD) - Red
-        g2.setColor(Color.RED);
-        g2.fillRect(p2.getX()-s/2, p2.getY()-s/2, s, s);
-
-        //HUD
-        g2.setColor(Color.BLACK);
-        g2.drawString("State: " + state + "   (P = Pause)", 10, 20);
-        g2.drawString("WASD = move both players together", 10, 40);
-        g2.drawString("P1 Brain: " + p1.getBrainName(), 10, 60);
-        g2.drawString("P2 Brain: " + p2.getBrainName() + " (may ignore input sometimes)", 10, 80);
+        
+//       //HUD
+//        g2.setColor(Color.BLACK);
+//        g2.drawString("State: " + state + "   (P = Pause)", 10, 20);
+//        g2.drawString("WASD = move both players together", 10, 40);
+//        g2.drawString("P1 Brain: " + p1.getBrainName(), 10, 60);
+//        g2.drawString("P2 Brain: " + p2.getBrainName() + " (may ignore input sometimes)", 10, 80);
     }
 }
