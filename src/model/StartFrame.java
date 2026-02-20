@@ -18,7 +18,8 @@ import javax.swing.border.EmptyBorder;
 
 public class StartFrame extends JFrame {
 		
-		private JLabel title = new JLabel("GAME TITLE"); 
+		private JLabel title = new JLabel("THE MAZE"); 
+		private JLabel caption = new JLabel("Help Mochi get through the maze avoid the tiles and the enemies!"); 
 		private JButton startButton = new JButton(); 
 		Color bgColor = new Color(200, 220, 240);
 		Color btnColor1 = new Color(248, 208, 218); 
@@ -30,6 +31,7 @@ public class StartFrame extends JFrame {
 
 		public  StartFrame() {
 			setTitle("GameName"); 
+			
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setSize(700,700);
 			JPanel root = new JPanel(new BorderLayout());
@@ -42,9 +44,12 @@ public class StartFrame extends JFrame {
 	        centerPanel.setOpaque(true);
 	        centerPanel.setPreferredSize(new Dimension(900, 700));
 	        
-			 title.setFont(new Font("Comic Sans MS", Font.BOLD, 40));
+			 title.setFont(new Font("Comic Sans MS", Font.BOLD, 60));
 			 title.setForeground(txtColor1); 
-			 title.setAlignmentY(TOP_ALIGNMENT);				
+			 title.setAlignmentY(TOP_ALIGNMENT);	
+			 caption.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+			 caption.setForeground(txtColor1); 
+			 caption.setAlignmentY(TOP_ALIGNMENT);
 			
 			startButton = new JButton("Start"); 
 			startButton.setForeground(txtColor); 
@@ -57,9 +62,10 @@ public class StartFrame extends JFrame {
 //			startButton.setSize(500,100); //the size wil not listen to this as its doing any size it wants
 
 			Dimension btnSize = new Dimension(300, 100);
+			//was changing sizes and i didnt like so this keeps the size in the way i want 
 			startButton.setPreferredSize(btnSize);
-			startButton.setMaximumSize(btnSize);     // <- important
-			startButton.setMinimumSize(btnSize);     // optional, keeps it steady on shrink
+			startButton.setMaximumSize(btnSize);     
+			startButton.setMinimumSize(btnSize);     
 			startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 			startButton.addActionListener(e -> {
@@ -87,7 +93,9 @@ public class StartFrame extends JFrame {
 			startButton.addMouseListener(hover);
 		
 			centerPanel.add(Box.createVerticalStrut(16));
+
 			centerPanel.add(title);
+			centerPanel.add(caption);
 			centerPanel.add(Box.createVerticalStrut(24));
 			centerPanel.add(Box.createVerticalGlue());
 			centerPanel.add(startButton);
@@ -102,25 +110,9 @@ public class StartFrame extends JFrame {
 
 			addSprite(bottomSprites, "/purplePlayer.png");
 			addSprite(bottomSprites, "/pinkSimr.png");
-			bottomSprites.setBorder(new EmptyBorder(0, 0, 100, 0)); 
+			bottomSprites.setBorder(new EmptyBorder(0, 0, 200, 0)); 
 
 			root.add(bottomSprites, BorderLayout.SOUTH);
-//			
-//			try {
-//				BufferedImage playerImg = ImageIO.read(Tile.class.getResource("/purplePlayer.png"));
-//				JLabel playerImage = new JLabel(new ImageIcon(playerImg));
-//				panel.add(playerImage);
-//			} catch (IOException | IllegalArgumentException ex) {}
-//			
-//			
-//			try {
-//				BufferedImage playerImg = ImageIO.read(Tile.class.getResource("/pinkSimr.png"));
-//				JLabel playerImage = new JLabel(new ImageIcon(playerImg));
-//				panel.add(playerImage);
-//			} catch (IOException | IllegalArgumentException ex) {}
-//				
-
-
 		// took so very long but the grid layout allows me to center the buttons and i am able to set the button and title to be where i want 
 //		JPanel root = new JPanel(new GridBagLayout());
 //		root.setBackground(Color.BLACK);
