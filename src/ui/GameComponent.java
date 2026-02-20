@@ -1,16 +1,27 @@
 package ui;
 
 import model.GameModel;
+import model.GameObj;
 import model.GameState;
 import model.Player;
+import model.StartTile;
 import model.Tile;
-
-import javax.swing.*;
+import model.WallTile;
+import model.EndTile;
+import model.FloorTile;
 import model.GameConfig;
-import java.awt.*;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -19,15 +30,15 @@ import brain.ADHDBrain;
 import brain.NeurotypicalBrain;
 
 public class GameComponent extends JPanel {
-	private final Player p1;
-    private final Player p2;
+	private Player p1;
+    private Player p2;
     
     private GameState state = GameState.PLAYING;
     private int speed = GameConfig.PLAYER_SPEED;
     
     private ArrayList<Player> players = new ArrayList<>();
-    private Tile grassTile, stoneTile;
-    
+    private ArrayList<Tile> tiles = new ArrayList<>();
+
     private boolean left, right, up, down;
     private int vx, vy;
     public GameComponent() {
@@ -36,24 +47,54 @@ public class GameComponent extends JPanel {
     	setOpaque(true);
         setPreferredSize(new Dimension(GameConfig.WIDTH, GameConfig.HEIGHT));
         
-        p1 = new Player(140, 200, new NeurotypicalBrain());
-        p2 = new Player(260, 200, new ADHDBrain());
-        players.add(p1);
-        players.add(p2);
+    	int s = GameConfig.PLAYER_SIZE;
+    	
+        loadLevel();
         
-		grassTile = new Tile(0, 0, 0); 
-        stoneTile = new Tile(1, 0, 1); 
         
         Timer timer = new Timer(50, e -> {
         	for (Player p : players) {
-        		if (state == GameState.PLAYING) {
+        		if (state == GameState.PLAYING && p.canMove()) {
+
         			vx = (right ? speed : 0) - (left ? speed : 0);
                 	vy = (down ? speed : 0) - (up ? speed : 0);
-        			p.setVelocity(vx, vy);
+        	    	
+        			// need to separate x and y movement
+        			
+                	// move x first
+        			p.setX(p.getX() + vx);
+        			for (Tile t : tiles) {
+        				Rectangle tileRect = t.getBounds();
+        			    if (tileRect.intersects(p.getBounds()) && t.isSolid()) {
+        			        if (vx > 0) {
+        			        	// hit tile from left
+        			            p.setX(tileRect.x - s/2);
+        			        } else if (vx < 0) {
+        			        	// hit tile from right
+        			            p.setX(tileRect.x + tileRect.width + s/2);
+        			        }
+        			    }
+        			}
+
+        			// move y second
+        			p.setY(p.getY() + vy);
+        			for (Tile t : tiles) {
+        				Rectangle tileRect = t.getBounds();
+        				if (tileRect.intersects(p.getBounds()) && t.isSolid()) {
+        			        if (vy > 0) {
+        			            // hit tile from top
+        			            p.setY(tileRect.y - s/2);
+        			        } else if (vy < 0) {
+        			        	// hit tile from bottom
+        			            p.setY(tileRect.y + tileRect.height + s/2);
+        			        }
+        			    }
+        			}
+        
         		}
-        		p.update();
-        	}
+        	p.update();
         	repaint();
+        	}
         });
         timer.start();
         
@@ -104,21 +145,58 @@ public class GameComponent extends JPanel {
     		}
     	}
     };
-    	
+    
+    private void loadLevel() {
+		File file = new File("./level1.txt");
+		
+		try {
+			Scanner scanner = new Scanner(file);
+			int row = 0;
+			while (scanner.hasNextLine()) {
+				int s = GameConfig.TILE_SIZE;
+				String line = scanner.nextLine();
+				for (int col = 0; col < line.length(); col++) {
+					char c = line.charAt(col);
+					if (c == 'F') {
+				        Tile t = new FloorTile(col, row); 
+				        tiles.add(t);
+					} else if (c == 'W') {
+				        Tile t = new WallTile(col, row); 
+				        tiles.add(t);
+					} else if (c == 'E') {
+						Tile t = new EndTile(col, row);
+						tiles.add(t);
+					} else if (c == '1') {
+						Tile t = new FloorTile(col, row);
+				        p1 = new Player(col*s+s/2, row*s+s/2, new NeurotypicalBrain());
+						players.add(p1);
+					}  else if (c == '2') {
+						Tile t = new FloorTile(col, row);
+				        p2 = new Player(col*s+s/2, row*s+s/2, new NeurotypicalBrain());
+						players.add(p2);
+					}
+				}
+				
+				row++;
+			}
+			scanner.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("level1.txt not found");
+		}
+	}
+    
     @Override
     protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);
 	    Graphics2D g2 = (Graphics2D) g;
 	    
-		int tileW = getWidth() / 5;
-		int tileH = getHeight() / 5;
-		grassTile.drawOn(g2, tileW, tileH);
-		stoneTile.drawOn(g2, tileW, tileH);
+	    for (Tile t : tiles) {
+	    	t.drawOn(g2);
+	    }
 		
 	    p1.drawOn(g2, Color.BLUE);
 	    p2.drawOn(g2, Color.RED);
 	    
-        
         
 //       //HUD
 //        g2.setColor(Color.BLACK);

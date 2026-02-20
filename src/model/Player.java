@@ -1,15 +1,12 @@
 package model;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 import brain.CognitiveBrain; 
-public class Player {
-
+public class Player extends GameObj{
     private int x;
     private int y;
-
-    private int vx;
-    private int vy;
 
     private final CognitiveBrain brain;
 
@@ -23,36 +20,18 @@ public class Player {
         return brain.allowMovement();
     }
 
-    public void setVelocity(int vx, int vy) {
-        this.vx = vx;
-        this.vy = vy;
-    }
-
     public void update() {
-    	if (!this.canMove()) {
-    		vx = 0;
-    		vy = 0;
-    		return;
-    	}
-        x += vx;
-        y += vy;
-        
         int s = GameConfig.PLAYER_SIZE;
 
         // clamp to window bounds
         int maxX = GameConfig.WIDTH;
         int maxY = GameConfig.HEIGHT;
         
-        int player_left_edge = x - s/2;
-        int player_right_edge = x + s/2;
-        int player_top_edge = y - s/2;
-        int player_bottom_edge = y + s/2;
-        
-        if (player_left_edge < 0) x = s/2;
-        if (player_right_edge > maxX) x = maxX - s/2;
+        if (x-s/2 < 0) x = s/2;
+        if (x+s/2> maxX) x = maxX - s/2;
 
-        if (player_top_edge < 0) y = s/2;
-        if (player_bottom_edge > maxY) y = maxY - s/2;
+        if (y-s/2 < 0) y = s/2;
+        if (y+s/2 > maxY) y = maxY - s/2;
     }
 
     public int getX() { 
@@ -60,6 +39,17 @@ public class Player {
     }
     public int getY() { 
     	return y; 
+    }
+    public void setX(int x) { 
+    	this.x = x; 
+    }
+    public void setY(int y) { 
+    	this.y = y; 
+    }
+    
+    public Rectangle getBounds() {
+    	int s = GameConfig.PLAYER_SIZE;
+    	return new Rectangle(x-s/2, y-s/2, s, s);
     }
 
     public String getBrainName() {

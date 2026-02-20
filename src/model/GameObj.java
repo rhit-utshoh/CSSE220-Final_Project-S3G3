@@ -5,11 +5,6 @@ import java.awt.image.BufferedImage;
 public class GameObj {
 	int x; 
 	int y; 
-	private static BufferedImage sprite = null;
+	private static BufferedImage sprite;
 	
-	public static void main(String[] args) {
-		
-		
-		}
-
 }
