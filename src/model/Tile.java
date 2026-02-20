@@ -11,11 +11,11 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class Tile  extends GameObj{
+public class Tile extends GameObj{
 
 	 	private int gridX;
 	    private int gridY;
-		private Rectangle grassTile, brickTile; 
+		private Rectangle tileRect; 
 		private static BufferedImage grassSprite;
 		private static BufferedImage stoneSprite;
 		private static boolean triedLoad = false;
@@ -49,19 +49,18 @@ public class Tile  extends GameObj{
 			BufferedImage sprite = (type == 0 ? grassSprite : stoneSprite);
 
 			Shape origionalClip = g2.getClip();
-			Shape rectangle = new Rectangle2D.Double(x, y, tileW, tileH);
-			g2.setClip(rectangle);
+			Rectangle rect = new Rectangle(x, y, tileW, tileH);
+			g2.setClip(rect);
 			
 			if(sprite != null) {
 				g2.drawImage(sprite, x, y, tileW, tileH, null);
 			}
 			else {
-				g2.setColor(Color.green);
-				g2.fill(grassTile);
-
-				g2.setColor(Color.DARK_GRAY);
-				g2.fill(brickTile);
-		}
+				Color c = (type == 0 ? Color.GREEN : Color.DARK_GRAY);
+				g2.setColor(c);
+				g2.fill(rect);
+			}
+			g2.setClip(origionalClip);
 	}
 	
 }

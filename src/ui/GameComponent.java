@@ -7,6 +7,7 @@ import model.GameConfig;
 import model.GameModel;
 import model.GameState;
 import model.Player;
+import model.Tile;
 
 import javax.swing.*;
 <<<<<<< HEAD
@@ -142,6 +143,7 @@ public class GameComponent extends JPanel {
     private int speed = GameConfig.PLAYER_SPEED;
     
     private ArrayList<Player> players = new ArrayList<>();
+    private Tile grassTile, stoneTile;
     
     private boolean left, right, up, down;
     private int vx, vy;
@@ -156,12 +158,16 @@ public class GameComponent extends JPanel {
         players.add(p1);
         players.add(p2);
         
+		grassTile = new Tile(0, 0, 0); 
+        stoneTile = new Tile(1, 0, 1); 
+        
         Timer timer = new Timer(50, e -> {
         	for (Player p : players) {
-        		if (state == GameState.PLAYING)
-        			vx = (right ? GameConfig.PLAYER_SPEED : 0) - (left ? GameConfig.PLAYER_SPEED : 0);
-                	vy = (down ? GameConfig.PLAYER_SPEED : 0) - (up ? GameConfig.PLAYER_SPEED : 0);
+        		if (state == GameState.PLAYING) {
+        			vx = (right ? speed : 0) - (left ? speed : 0);
+                	vy = (down ? speed : 0) - (up ? speed : 0);
         			p.setVelocity(vx, vy);
+        		}
         		p.update();
         	}
         	repaint();
@@ -207,16 +213,16 @@ public class GameComponent extends JPanel {
     	@Override
     	public void keyReleased(KeyEvent e) {
     		switch (e.getKeyCode()) {
-    		case KeyEvent.VK_UP:
+    		case KeyEvent.VK_W: case KeyEvent.VK_UP:
     			up = false;
     			break;
-    		case KeyEvent.VK_DOWN:
+    		case KeyEvent.VK_S: case KeyEvent.VK_DOWN:
     			down = false;
     			break;
-    		case KeyEvent.VK_LEFT:
+    		case KeyEvent.VK_A: case KeyEvent.VK_LEFT:
     			left = false;
     			break;
-    		case KeyEvent.VK_RIGHT:
+    		case KeyEvent.VK_D: case KeyEvent.VK_RIGHT:
     			right = false;
     			break;
     		}
@@ -225,9 +231,19 @@ public class GameComponent extends JPanel {
     	
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
+	    super.paintComponent(g);
+	    Graphics2D g2 = (Graphics2D) g;
+	    
+		int tileW = getWidth() / 5;
+		int tileH = getHeight() / 5;
+		grassTile.drawOn(g2, tileW, tileH);
+		stoneTile.drawOn(g2, tileW, tileH);
+		
+	    p1.drawOn(g2, Color.BLUE);
+	    p2.drawOn(g2, Color.RED);
+	    
         
+<<<<<<< HEAD
         //draw players
         int s = GameConfig.PLAYER_SIZE;
 >>>>>>> branch 'm3_lindsey' of https://github.com/rhit-utshoh/CSSE220-Final_Project-S3G3.git
@@ -252,6 +268,15 @@ public class GameComponent extends JPanel {
         g2.drawString("WASD = move both players together", 10, 40);
         g2.drawString("P1 Brain: " + p1.getBrainName(), 10, 60);
         g2.drawString("P2 Brain: " + p2.getBrainName() + " (may ignore input sometimes)", 10, 80);
+=======
+        
+//       //HUD
+//        g2.setColor(Color.BLACK);
+//        g2.drawString("State: " + state + "   (P = Pause)", 10, 20);
+//        g2.drawString("WASD = move both players together", 10, 40);
+//        g2.drawString("P1 Brain: " + p1.getBrainName(), 10, 60);
+//        g2.drawString("P2 Brain: " + p2.getBrainName() + " (may ignore input sometimes)", 10, 80);
+>>>>>>> branch 'development' of https://github.com/rhit-utshoh/CSSE220-Final_Project-S3G3.git
     }
 >>>>>>> branch 'm3_lindsey' of https://github.com/rhit-utshoh/CSSE220-Final_Project-S3G3.git
 }

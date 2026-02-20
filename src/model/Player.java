@@ -1,4 +1,7 @@
 package model;
+import java.awt.Color;
+import java.awt.Graphics2D;
+
 import brain.CognitiveBrain; 
 public class Player {
 
@@ -65,21 +68,23 @@ public class Player {
     	}
         x += vx;
         y += vy;
+        
+        int s = GameConfig.PLAYER_SIZE;
 
         // clamp to window bounds
-        int maxX = GameConfig.WIDTH - GameConfig.PLAYER_SIZE;
-        int maxY = GameConfig.HEIGHT - GameConfig.PLAYER_SIZE;
+        int maxX = GameConfig.WIDTH;
+        int maxY = GameConfig.HEIGHT;
         
-        int player_left_edge = x - GameConfig.PLAYER_SIZE;
-        int player_right_edge = x + GameConfig.PLAYER_SIZE;
-        int player_top_edge = y - GameConfig.PLAYER_SIZE;
-        int player_bottom_edge = y + GameConfig.PLAYER_SIZE;
+        int player_left_edge = x - s/2;
+        int player_right_edge = x + s/2;
+        int player_top_edge = y - s/2;
+        int player_bottom_edge = y + s/2;
         
-        if (player_left_edge < 0) x = GameConfig.PLAYER_SIZE;
-        if (player_right_edge > maxX) x = maxX - GameConfig.PLAYER_SIZE;
+        if (player_left_edge < 0) x = s/2;
+        if (player_right_edge > maxX) x = maxX - s/2;
 
-        if (player_top_edge < 0) y = GameConfig.PLAYER_SIZE;
-        if (player_bottom_edge > maxY) y = maxY - GameConfig.PLAYER_SIZE;
+        if (player_top_edge < 0) y = s/2;
+        if (player_bottom_edge > maxY) y = maxY - s/2;
     }
 
     public int getX() { 
@@ -91,6 +96,13 @@ public class Player {
 
     public String getBrainName() {
         return brain.getClass().getSimpleName();
+    }
+    
+    public void drawOn(Graphics2D g2, Color c) {
+        int s = GameConfig.PLAYER_SIZE;
+
+        g2.setColor(c);
+        g2.fillRect(x-s/2, y-s/2, s, s);
     }
 }
 >>>>>>> branch 'm3_lindsey' of https://github.com/rhit-utshoh/CSSE220-Final_Project-S3G3.git
