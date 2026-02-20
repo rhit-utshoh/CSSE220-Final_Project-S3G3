@@ -36,21 +36,23 @@ public class Player {
     	}
         x += vx;
         y += vy;
+        
+        int s = GameConfig.PLAYER_SIZE;
 
         // clamp to window bounds
-        int maxX = GameConfig.WIDTH - GameConfig.PLAYER_SIZE;
-        int maxY = GameConfig.HEIGHT - GameConfig.PLAYER_SIZE;
+        int maxX = GameConfig.WIDTH;
+        int maxY = GameConfig.HEIGHT;
         
-        int player_left_edge = x - GameConfig.PLAYER_SIZE;
-        int player_right_edge = x + GameConfig.PLAYER_SIZE;
-        int player_top_edge = y - GameConfig.PLAYER_SIZE;
-        int player_bottom_edge = y + GameConfig.PLAYER_SIZE;
+        int player_left_edge = x - s/2;
+        int player_right_edge = x + s/2;
+        int player_top_edge = y - s/2;
+        int player_bottom_edge = y + s/2;
         
-        if (player_left_edge < 0) x = GameConfig.PLAYER_SIZE;
-        if (player_right_edge > maxX) x = maxX - GameConfig.PLAYER_SIZE;
+        if (player_left_edge < 0) x = s/2;
+        if (player_right_edge > maxX) x = maxX - s/2;
 
-        if (player_top_edge < 0) y = GameConfig.PLAYER_SIZE;
-        if (player_bottom_edge > maxY) y = maxY - GameConfig.PLAYER_SIZE;
+        if (player_top_edge < 0) y = s/2;
+        if (player_bottom_edge > maxY) y = maxY - s/2;
     }
 
     public int getX() { 
