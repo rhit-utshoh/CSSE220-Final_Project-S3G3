@@ -3,9 +3,6 @@ package model;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -41,15 +38,14 @@ public class Tile  extends GameObj{
 				stoneSprite = null; 
 			}
 		}
+		public void drawOn(Graphics2D g2, int tileW, int tileH) {
+			drawAt(g2, tileW, tileH, this.gridX, this.gridY, this.type);
+		}
 
-		public void drawOn(Graphics2D g2, int tileW, int tileH){
+		public void drawAt(Graphics2D g2, int tileW, int tileH, int gridX, int gridY, int type){
 			int x = gridX * tileW;
 			int y = gridY * tileH;
 			BufferedImage sprite = (type == 0 ? grassSprite : stoneSprite);
-
-			Shape origionalClip = g2.getClip();
-			Shape rectangle = new Rectangle2D.Double(x, y, tileW, tileH);
-			g2.setClip(rectangle);
 			
 			if(sprite != null) {
 				g2.drawImage(sprite, x, y, tileW, tileH, null);
@@ -60,7 +56,12 @@ public class Tile  extends GameObj{
 
 				g2.setColor(Color.DARK_GRAY);
 				g2.fill(brickTile);
-		}
+			}
+
+			g2.fillRect(x, y, tileW, tileH);
+			g2.setColor(Color.BLACK);
+            g2.drawRect(x, y, tileW, tileH);
+
 	}
 	
 }
