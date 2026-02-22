@@ -20,6 +20,7 @@ import brain.NeurotypicalBrain;
 public class GameComponent extends JPanel {
 	private final Player p1;
     private final Player p2;
+ 
     
     private GameState state = GameState.PLAYING;
     private int speed = GameConfig.PLAYER_SPEED;
@@ -101,9 +102,9 @@ public class GameComponent extends JPanel {
     	
     @Override
     protected void paintComponent(Graphics g) {
+ 
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        
         //draw players
         int s = GameConfig.PLAYER_SIZE;
 
