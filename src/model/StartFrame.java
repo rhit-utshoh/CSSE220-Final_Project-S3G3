@@ -19,7 +19,7 @@ import javax.swing.border.EmptyBorder;
 public class StartFrame extends JFrame {
 		
 		private JLabel title = new JLabel("THE MAZE"); 
-		private JLabel caption = new JLabel("Help Mochi get through the maze avoid the tiles and the enemies!"); 
+		private JLabel caption = new JLabel("Help Mochi and her friend get through the maze!"); 
 		private JButton startButton = new JButton(); 
 		Color bgColor = new Color(200, 220, 240);
 		Color btnColor1 = new Color(248, 208, 218); 
@@ -30,8 +30,6 @@ public class StartFrame extends JFrame {
 		Color btnHovBorder = new Color(152, 169, 255); 
 
 		public  StartFrame() {
-			setTitle("GameName"); 
-			
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setSize(700,700);
 			JPanel root = new JPanel(new BorderLayout());
@@ -93,7 +91,6 @@ public class StartFrame extends JFrame {
 			startButton.addMouseListener(hover);
 		
 			centerPanel.add(Box.createVerticalStrut(16));
-
 			centerPanel.add(title);
 			centerPanel.add(caption);
 			centerPanel.add(Box.createVerticalStrut(24));
@@ -113,12 +110,6 @@ public class StartFrame extends JFrame {
 			bottomSprites.setBorder(new EmptyBorder(0, 0, 200, 0)); 
 
 			root.add(bottomSprites, BorderLayout.SOUTH);
-		// took so very long but the grid layout allows me to center the buttons and i am able to set the button and title to be where i want 
-//		JPanel root = new JPanel(new GridBagLayout());
-//		root.setBackground(Color.BLACK);
-//		
-//		root.add(panel);  
-//		setContentPane(root);
 		}
 	
 		private void addSprite(JPanel bttm, String resourcePath) {
