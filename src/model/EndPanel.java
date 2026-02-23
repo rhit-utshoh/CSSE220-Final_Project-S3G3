@@ -28,7 +28,6 @@ public class EndPanel extends JPanel {
     Color btnHovBorder = new Color(152, 169, 255);
 
     public EndPanel() {
-
         setLayout(new BorderLayout());
         setBackground(Color.BLACK);
 

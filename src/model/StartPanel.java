@@ -28,13 +28,30 @@ public class StartPanel extends JPanel {
     Color txtColor = new Color(175, 150, 210);
     Color btnHov = new Color(207, 196, 255);
     Color btnHovBorder = new Color(152, 169, 255);
-
+    
     public StartPanel() {
-    	JPanel root = new JPanel(new BorderLayout());
-        root.setBackground(Color.BLACK);
- 
+    	setLayout(new BorderLayout());
+    	
+        add(makeCenterPanel(), BorderLayout.CENTER);
 
-        JPanel centerPanel = new JPanel();
+        // Bottom panel has the two player sprites
+        JPanel bottomSprites = new JPanel();
+        bottomSprites.setOpaque(true);
+        bottomSprites.setBackground(bgColor);
+        bottomSprites.setLayout(new FlowLayout(FlowLayout.CENTER, 24, 12));
+
+        addSprite(bottomSprites, "/purplePlayer.png");
+		addSprite(bottomSprites, "/pinkSimr.png");
+		bottomSprites.setBorder(new EmptyBorder(0, 0, 200, 0)); 
+		add(bottomSprites, BorderLayout.SOUTH);
+
+    }
+    
+    private JPanel makeCenterPanel() {
+    	// Make the center panel with title, start button, captions 1+2
+    	// We also have a mouse listener that adds a hover effect to the start button
+    	
+    	JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         centerPanel.setBackground(bgColor);
         centerPanel.setOpaque(true);
@@ -99,23 +116,10 @@ public class StartPanel extends JPanel {
         centerPanel.add(Box.createVerticalGlue());
         centerPanel.add(startButton);
         centerPanel.add(Box.createVerticalGlue());
-
-        add(centerPanel, BorderLayout.CENTER);
-
-        // Bottom sprites
-        JPanel bottomSprites = new JPanel();
-        bottomSprites.setOpaque(true);
-        bottomSprites.setBackground(bgColor);
-        bottomSprites.setLayout(new FlowLayout(FlowLayout.CENTER, 24, 12));
-
-        addSprite(bottomSprites, "/purplePlayer.png");
-		addSprite(bottomSprites, "/pinkSimr.png");
-		bottomSprites.setBorder(new EmptyBorder(0, 0, 200, 0)); 
-		root.add(bottomSprites, BorderLayout.SOUTH);
-		// took so very long but the grid layout allows me to center the buttons and i am able to set the button and title to be where i want 
-
+        
+        return centerPanel;
     }
-
+    
     private void addSprite(JPanel bottomPanel, String resourcePath) {
         try {
             BufferedImage img = ImageIO.read(Tile.class.getResource(resourcePath));
@@ -123,7 +127,9 @@ public class StartPanel extends JPanel {
                 JLabel sprite = new JLabel(new ImageIcon(img));
                 bottomPanel.add(sprite);
             }
-        } catch (IOException | IllegalArgumentException ex) {}
+        } catch (IOException | IllegalArgumentException ex) {
+        	System.out.println("problem loading images");
+        }
     }
 }
 //when i did css i could make it so when i hover over the start button it could(HOVER EFFECT ON JBUTTON)

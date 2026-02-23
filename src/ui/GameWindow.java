@@ -1,7 +1,8 @@
 package ui;
+import model.EndPanel;
 //instead of game model can we take in drawing component 
 import model.GameModel;
-import model.StartFrame;
+import model.StartPanel;
 
 import javax.swing.*;
 
@@ -12,10 +13,8 @@ public class GameWindow {
 //        
         JFrame frame = new JFrame("CSSE220 Final Project - Milestone 1");
 //        JFrame frame = new StartFrame();
-//        JFrame frame = new JFrame("CSSE220 Final Project - Milestone 1");
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setContentPane(frame);
-        frame.setContentPane(new GameComponent());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setContentPane(new EndPanel());
         frame.pack();
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
