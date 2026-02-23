@@ -19,6 +19,7 @@ public class StartPanel extends JPanel {
 
     private JLabel title = new JLabel("THE MAZE");
 	private JLabel caption = new JLabel("Help Mochi and her friend get through the maze!"); 
+	private JLabel caption2 = new JLabel("Keep them in the water avoid the walls"); 
     private JButton startButton = new JButton();
     Color bgColor = new Color(200, 220, 240);
     Color btnColor1 = new Color(248, 208, 218);
@@ -46,6 +47,9 @@ public class StartPanel extends JPanel {
 		 caption.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 		 caption.setForeground(txtColor1); 
 		 caption.setAlignmentY(TOP_ALIGNMENT);
+		 caption2.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+		 caption2.setForeground(txtColor1); 
+		 caption2.setAlignmentY(TOP_ALIGNMENT);
 
         // start Button
         startButton = new JButton("Restart");
@@ -90,6 +94,7 @@ public class StartPanel extends JPanel {
         centerPanel.add(Box.createVerticalStrut(16));
         centerPanel.add(title);
 		centerPanel.add(caption);
+		centerPanel.add(caption2);
 		centerPanel.add(Box.createVerticalStrut(24));
         centerPanel.add(Box.createVerticalGlue());
         centerPanel.add(startButton);
