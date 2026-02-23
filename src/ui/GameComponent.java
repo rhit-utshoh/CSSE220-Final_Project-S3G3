@@ -4,7 +4,6 @@ import model.GameModel;
 import model.GameObj;
 import model.GameState;
 import model.Player;
-import model.StartTile;
 import model.Tile;
 import model.WallTile;
 import model.EndTile;
@@ -41,6 +40,7 @@ public class GameComponent extends JPanel {
 
     private boolean left, right, up, down;
     private int vx, vy;
+    
     public GameComponent() {
     	
     	setBackground(Color.WHITE);
@@ -170,10 +170,12 @@ public class GameComponent extends JPanel {
 						Tile t = new FloorTile(col, row);
 				        p1 = new Player(col*s+s/2, row*s+s/2, new NeurotypicalBrain());
 						players.add(p1);
+						tiles.add(t);
 					}  else if (c == '2') {
 						Tile t = new FloorTile(col, row);
 				        p2 = new Player(col*s+s/2, row*s+s/2, new NeurotypicalBrain());
 						players.add(p2);
+						tiles.add(t);
 					}
 				}
 				

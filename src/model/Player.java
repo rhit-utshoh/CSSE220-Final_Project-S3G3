@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import brain.CognitiveBrain; 
-public class Player extends GameObj{
+public class Player{
     private int x;
     private int y;
 

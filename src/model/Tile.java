@@ -8,35 +8,32 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public abstract class Tile extends GameObj{
-	 	private int x;
-	    private int y;
+public abstract class Tile{
+	 	private int x, y;
 	    private int size = GameConfig.TILE_SIZE;
 
 	    protected boolean solid;
 	    private Color backupColor;
 	    	    
-		private Rectangle tileRect; 
+		private Rectangle tileRect;
+		protected BufferedImage sprite;
 		
-		public Tile(int gridX, int gridY, Color bc){
+		public Tile(int gridX, int gridY, Color bc, BufferedImage sprite){
 			this.x = gridX * size;
 			this.y = gridY * size; 
+			this.sprite = sprite;
 			this.backupColor = bc;
 
 			this.tileRect = new Rectangle(x, y, size, size);
 		}
 		
-	    protected abstract BufferedImage getSprite();
-
 	    
-		protected BufferedImage loadSprite(String imagePath) {
-			BufferedImage sprite;
+		protected static BufferedImage loadSprite(String imagePath) {
 			try {
-				sprite = ImageIO.read(Tile.class.getResource(imagePath));
+				return ImageIO.read(Tile.class.getResource(imagePath));
 			} catch (IOException | IllegalArgumentException ex) {
-				sprite = null; 
+				return null; 
 			}
-			return sprite;
 		}
 		
 		public Rectangle getBounds() {
@@ -52,11 +49,6 @@ public abstract class Tile extends GameObj{
 		}
 		
 		public void drawOn(Graphics2D g2) {
-
-			Shape originalClip = g2.getClip();
-			g2.setClip(tileRect);
-			
-			BufferedImage sprite = getSprite();
 			if(sprite != null) {
 				g2.drawImage(sprite, x, y, size, size, null);
 			}
@@ -64,7 +56,6 @@ public abstract class Tile extends GameObj{
 				g2.setColor(this.backupColor);
 				g2.fill(tileRect);
 			}
-			g2.setClip(originalClip);
 	}
 	
 }

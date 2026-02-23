@@ -5,15 +5,25 @@ import java.awt.image.BufferedImage;
 
 public class FloorTile extends Tile{
 	private static BufferedImage sprite;
+	private static boolean triedLoad;
+	
 	
 	public FloorTile(int gridX, int gridY) {
-		super(gridX, gridY, Color.GREEN);
-		sprite = super.loadSprite("/grass.jpg");
+		super(
+				gridX, 
+				gridY, 
+				Color.GREEN,
+				loadSpriteOnce()
+		);
 		this.solid = false;
 	}
 	
-	@Override
-	protected BufferedImage getSprite() {
+	private static BufferedImage loadSpriteOnce() {
+		if (!triedLoad) {
+			sprite = loadSprite("/grass.jpg");
+			triedLoad = true;
+		}
 		return sprite;
 	}
+
 }
