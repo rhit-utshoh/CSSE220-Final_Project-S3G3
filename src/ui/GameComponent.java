@@ -1,6 +1,5 @@
 package ui;
 
-import model.GameModel;
 import model.GameObj;
 import model.GameState;
 import model.Player;
@@ -23,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import brain.ADHDBrain;
@@ -31,6 +31,8 @@ import brain.NeurotypicalBrain;
 public class GameComponent extends JPanel {
 	private Player p1;
     private Player p2;
+    
+    private Timer timer;
     
     private GameState state = GameState.PLAYING;
     private int speed = GameConfig.PLAYER_SPEED;
@@ -52,7 +54,7 @@ public class GameComponent extends JPanel {
         loadLevel();
         
         
-        Timer timer = new Timer(50, e -> {
+        timer = new Timer(50, e -> {
         	for (Player p : players) {
         		if (state == GameState.PLAYING && p.canMove()) {
 
@@ -96,11 +98,11 @@ public class GameComponent extends JPanel {
         	repaint();
         	}
         });
-        timer.start();
         
         // bind keys
         setFocusable(true);
         addKeyListener(ka);
+        
     }	
 
     KeyAdapter ka = new KeyAdapter() {
@@ -206,5 +208,9 @@ public class GameComponent extends JPanel {
 //        g2.drawString("WASD = move both players together", 10, 40);
 //        g2.drawString("P1 Brain: " + p1.getBrainName(), 10, 60);
 //        g2.drawString("P2 Brain: " + p2.getBrainName() + " (may ignore input sometimes)", 10, 80);
+    }
+    
+    public void startGame() {
+    	timer.start();
     }
 }

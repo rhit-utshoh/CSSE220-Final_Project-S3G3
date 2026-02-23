@@ -20,7 +20,7 @@ public class StartPanel extends JPanel {
     private JLabel title = new JLabel("THE MAZE");
 	private JLabel caption = new JLabel("Help Mochi and her friend get through the maze!"); 
 	private JLabel caption2 = new JLabel("Keep them in the water avoid the walls"); 
-    private JButton startButton = new JButton();
+    public JButton startButton = new JButton();
     Color bgColor = new Color(200, 220, 240);
     Color btnColor1 = new Color(248, 208, 218);
     Color btnColor = new Color(255, 210, 228);
@@ -55,7 +55,7 @@ public class StartPanel extends JPanel {
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         centerPanel.setBackground(bgColor);
         centerPanel.setOpaque(true);
-        centerPanel.setPreferredSize(new Dimension(900, 700));
+        centerPanel.setPreferredSize(new Dimension(GameConfig.WIDTH, GameConfig.HEIGHT));
 
         // Title & caption 
         title.setFont(new Font("Comic Sans MS", Font.BOLD, 60));
@@ -80,11 +80,6 @@ public class StartPanel extends JPanel {
         startButton.setMaximumSize(btnSize);
         startButton.setMinimumSize(btnSize);
         startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        startButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(startButton, "Starting");
-            // TODO: switch back to gameplay screen
-        });
 
         // Hover effect
         MouseAdapter hover = new MouseAdapter() {
@@ -120,6 +115,9 @@ public class StartPanel extends JPanel {
         return centerPanel;
     }
     
+    public JButton getStartButton() {
+    	return startButton;
+    }
     private void addSprite(JPanel bottomPanel, String resourcePath) {
         try {
             BufferedImage img = ImageIO.read(Tile.class.getResource(resourcePath));
