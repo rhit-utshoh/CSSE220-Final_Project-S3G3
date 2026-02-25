@@ -3,7 +3,6 @@ package app;
 import javax.swing.SwingUtilities;
 import ui.GameWindow;
 
-// lindsey was here
 /**
 * Class: MainApp
 * 
