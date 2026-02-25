@@ -1,65 +1,40 @@
 package model;
 import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 import brain.CognitiveBrain; 
-public class Player{
-    private int x;
-    private int y;
-
+public class Player extends GameObj{
     private final CognitiveBrain brain;
-
-    public Player(int x, int y, CognitiveBrain brain) {
-        this.x = x;
-        this.y = y;
-        this.brain = brain;
+    private BufferedImage sprite;
+    
+    public Player(int gridX, int gridY, CognitiveBrain brain, Color bc, String spritePath) {
+    	super(gridX, gridY, GameConfig.PLAYER_SIZE, bc, true);
+    	
+    	this.brain = brain;
+    	this.sprite = GameObj.loadSprite(spritePath);
+    }
+    
+    public BufferedImage getSprite() {
+    	return sprite;
+    }
+    public boolean canMove(float timeLeft) {
+        return brain.allowMovement(timeLeft);
     }
 
-    public boolean canMove() {
-        return brain.allowMovement();
-    }
-
-    public void update() {
-        int s = GameConfig.PLAYER_SIZE;
-
+    public void checkWallCollision() {
         // clamp to window bounds
         int maxX = GameConfig.WIDTH;
         int maxY = GameConfig.HEIGHT;
         
-        if (x-s/2 < 0) x = s/2;
-        if (x+s/2> maxX) x = maxX - s/2;
+        if (x-size/2 < 0) x = size/2;
+        if (x+size/2> maxX) x = maxX - size/2;
 
-        if (y-s/2 < 0) y = s/2;
-        if (y+s/2 > maxY) y = maxY - s/2;
-    }
-
-    public int getX() { 
-    	return x; 
-    }
-    public int getY() { 
-    	return y; 
-    }
-    public void setX(int x) { 
-    	this.x = x; 
-    }
-    public void setY(int y) { 
-    	this.y = y; 
-    }
-    
-    public Rectangle getBounds() {
-    	int s = GameConfig.PLAYER_SIZE;
-    	return new Rectangle(x-s/2, y-s/2, s, s);
+        if (y-size/2 < 0) y = size/2;
+        if (y+size/2 > maxY) y = maxY - size/2;
     }
 
     public String getBrainName() {
         return brain.getClass().getSimpleName();
     }
     
-    public void drawOn(Graphics2D g2, Color c) {
-        int s = GameConfig.PLAYER_SIZE;
-
-        g2.setColor(c);
-        g2.fillRect(x-s/2, y-s/2, s, s);
-    }
 }
