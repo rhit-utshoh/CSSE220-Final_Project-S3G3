@@ -1,19 +1,10 @@
 package ui;
 
-import model.GameObj;
-import model.GameState;
-import model.Player;
-import model.Tile;
-import model.WallTile;
-import model.EndTile;
-import model.FloorTile;
-import model.GameConfig;
+import model.*;
+import brain.ADHDBrain;
+import brain.NeurotypicalBrain;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -21,42 +12,44 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
+import javax.swing.*;
 
-import brain.ADHDBrain;
-import brain.NeurotypicalBrain;
 
-public class GameComponent extends JPanel {
-	private Player p1;
-    private Player p2;
+
+public class GameComponent extends JComponent {
+	private float timeLeft;
     
     private Timer timer;
     
-    private GameState state = GameState.PLAYING;
-    private int speed = GameConfig.PLAYER_SPEED;
+    private GameState state;
+    private int speed;
     
+    private Tile endTile;
     private ArrayList<Player> players = new ArrayList<>();
     private ArrayList<Tile> tiles = new ArrayList<>();
+    private int currentLevel;
 
     private boolean left, right, up, down;
     private int vx, vy;
     
-    public GameComponent() {
+    public GameComponent(GameWindow window) {
+    	// set initial vales
+    	currentLevel = 1;
+    	timeLeft = GameConfig.TIME_LIMIT;
+    	state = GameState.PLAYING;
+    	speed = GameConfig.PLAYER_SPEED;
     	
-    	setBackground(Color.WHITE);
-    	setOpaque(true);
-        setPreferredSize(new Dimension(GameConfig.WIDTH, GameConfig.HEIGHT));
+//    	// set up JComponent
+//    	setBackground(Color.WHITE);
+//    	setOpaque(true);
+//        setPreferredSize(new Dimension(GameConfig.WIDTH, GameConfig.HEIGHT));
         
-    	int s = GameConfig.PLAYER_SIZE;
-    	
-        loadLevel();
+        loadLevel(this.currentLevel);
         
-        
+        // Main timer loop
         timer = new Timer(50, e -> {
         	for (Player p : players) {
-        		if (state == GameState.PLAYING && p.canMove()) {
+        		if (state == GameState.PLAYING && p.canMove(timeLeft)) {
 
         			vx = (right ? speed : 0) - (left ? speed : 0);
                 	vy = (down ? speed : 0) - (up ? speed : 0);
@@ -70,10 +63,10 @@ public class GameComponent extends JPanel {
         			    if (tileRect.intersects(p.getBounds()) && t.isSolid()) {
         			        if (vx > 0) {
         			        	// hit tile from left
-        			            p.setX(tileRect.x - s/2);
+        			            p.setX(tileRect.x - p.getSize()/2);
         			        } else if (vx < 0) {
         			        	// hit tile from right
-        			            p.setX(tileRect.x + tileRect.width + s/2);
+        			            p.setX(tileRect.x + tileRect.width + p.getSize()/2);
         			        }
         			    }
         			}
@@ -85,18 +78,39 @@ public class GameComponent extends JPanel {
         				if (tileRect.intersects(p.getBounds()) && t.isSolid()) {
         			        if (vy > 0) {
         			            // hit tile from top
-        			            p.setY(tileRect.y - s/2);
+        			            p.setY(tileRect.y - p.getSize()/2);
         			        } else if (vy < 0) {
         			        	// hit tile from bottom
-        			            p.setY(tileRect.y + tileRect.height + s/2);
+        			            p.setY(tileRect.y + tileRect.height + p.getSize()/2);
         			        }
         			    }
         			}
+        			
+        			
         
         		}
-        	p.update();
-        	repaint();
+        		p.checkWallCollision();
         	}
+        
+        
+        for (int i = 0; i < players.size(); i++) {
+        	Rectangle endTileSmall = new Rectangle(endTile.getX(), endTile.getY(), endTile.getSize()/2, endTile.getSize()/2);
+        
+        	if (players.get(i).getBounds().intersects(endTileSmall))
+        		players.remove(i);
+//        	 win
+//        	timer.stop();
+        }
+        
+        if (timeLeft <= 0) {
+        	// lose
+        	timer.stop();
+        }
+        
+        if (state == GameState.PLAYING)
+        	timeLeft -= 0.05;
+
+        repaint();
         });
         
         // bind keys
@@ -104,7 +118,7 @@ public class GameComponent extends JPanel {
         addKeyListener(ka);
         
     }	
-
+    
     KeyAdapter ka = new KeyAdapter() {
     	@Override
     	public void keyPressed(KeyEvent e) {
@@ -148,8 +162,8 @@ public class GameComponent extends JPanel {
     	}
     };
     
-    private void loadLevel() {
-		File file = new File("./level1.txt");
+    private void loadLevel(int levelNum) {
+		File file = new File(String.format("./level%d.txt", levelNum));
 		
 		try {
 			Scanner scanner = new Scanner(file);
@@ -160,23 +174,23 @@ public class GameComponent extends JPanel {
 				for (int col = 0; col < line.length(); col++) {
 					char c = line.charAt(col);
 					if (c == 'F') {
-				        Tile t = new FloorTile(col, row); 
+				        Tile t = new Tile(col, row, TileType.FLOOR); 
 				        tiles.add(t);
 					} else if (c == 'W') {
-				        Tile t = new WallTile(col, row); 
+				        Tile t = new Tile(col, row, TileType.WALL); 
 				        tiles.add(t);
 					} else if (c == 'E') {
-						Tile t = new EndTile(col, row);
-						tiles.add(t);
+						endTile = new Tile(col, row, TileType.END);
+						tiles.add(endTile);
 					} else if (c == '1') {
-						Tile t = new FloorTile(col, row);
-				        p1 = new Player(col*s+s/2, row*s+s/2, new NeurotypicalBrain());
-						players.add(p1);
+						Tile t = new Tile(col, row, TileType.FLOOR);
+				        Player p = new Player(col, row, new NeurotypicalBrain(), Color.PINK, "/pinkPlayer.png");
+						players.add(p);
 						tiles.add(t);
 					}  else if (c == '2') {
-						Tile t = new FloorTile(col, row);
-				        p2 = new Player(col*s+s/2, row*s+s/2, new NeurotypicalBrain());
-						players.add(p2);
+						Tile t = new Tile(col, row, TileType.FLOOR);
+				        Player p = new Player(col, row, new ADHDBrain(), Color.MAGENTA, "/purplePlayer.png");
+						players.add(p);
 						tiles.add(t);
 					}
 				}
@@ -185,7 +199,7 @@ public class GameComponent extends JPanel {
 			}
 			scanner.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("level1.txt not found");
+			System.out.printf("level%d.txt not found", levelNum);
 		}
 	}
     
@@ -197,17 +211,18 @@ public class GameComponent extends JPanel {
 	    for (Tile t : tiles) {
 	    	t.drawOn(g2);
 	    }
-		
-	    p1.drawOn(g2, Color.BLUE);
-	    p2.drawOn(g2, Color.RED);
-	    
+	    for (Player p : players) {
+		    p.drawOn(g2);
+	    }
         
-//       //HUD
-//        g2.setColor(Color.BLACK);
-//        g2.drawString("State: " + state + "   (P = Pause)", 10, 20);
-//        g2.drawString("WASD = move both players together", 10, 40);
-//        g2.drawString("P1 Brain: " + p1.getBrainName(), 10, 60);
-//        g2.drawString("P2 Brain: " + p2.getBrainName() + " (may ignore input sometimes)", 10, 80);
+       //HUD
+	    Font f = new Font("Comic Sans MS", Font.BOLD, 20);
+        g2.setFont(f);
+        
+        g2.setColor(Color.BLACK);
+        g2.drawString("State: " + state + "   (P = Pause)", 10, 20);
+        g2.drawString("WASD or arrow keys = move both players together", 10, 50);
+        g2.drawString(String.format("Time Left: %.2f", timeLeft), 10, 80);
     }
     
     public void startGame() {

@@ -12,8 +12,17 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import model.GameConfig;
+
+import javax.swing.ImageIcon;
 
 public class StartPanel extends JPanel {
 
@@ -41,7 +50,7 @@ public class StartPanel extends JPanel {
         bottomSprites.setLayout(new FlowLayout(FlowLayout.CENTER, 24, 12));
 
         addSprite(bottomSprites, "/purplePlayer.png");
-		addSprite(bottomSprites, "/pinkSimr.png");
+		addSprite(bottomSprites, "/pinkPlayer.png");
 		bottomSprites.setBorder(new EmptyBorder(0, 0, 200, 0)); 
 		add(bottomSprites, BorderLayout.SOUTH);
 
@@ -120,7 +129,7 @@ public class StartPanel extends JPanel {
     }
     private void addSprite(JPanel bottomPanel, String resourcePath) {
         try {
-            BufferedImage img = ImageIO.read(Tile.class.getResource(resourcePath));
+            BufferedImage img = ImageIO.read(StartPanel.class.getResource(resourcePath));
             if (img != null) {
                 JLabel sprite = new JLabel(new ImageIcon(img));
                 bottomPanel.add(sprite);

@@ -1,21 +1,22 @@
 package ui;
-import model.EndPanel;
-import model.StartPanel;
-
-//instead of game model can we take in drawing component 
 import java.awt.CardLayout;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
+import model.StartPanel;
 
 public class GameWindow {
 	private JFrame frame;
+	private JPanel cards;
 	
 	public GameWindow() {        
-        frame = new JFrame("CSSE220 Final Project - Milestone 1");
-        JPanel cards = new JPanel(new CardLayout());
+        frame = new JFrame("CSSE220 Final Project - Milestone 3");
+        cards = new JPanel(new CardLayout());
         
         StartPanel startPanel = new StartPanel();
-        GameComponent gc = new GameComponent();
+        GameComponent gc = new GameComponent(this);
         
         cards.add(startPanel, "START");
         cards.add(gc, "GAME");
@@ -38,4 +39,12 @@ public class GameWindow {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
+	
+	public void winGame(float score) {
+		
+	}
+	
+	public void loseGame() {
+		
+	}
 }
