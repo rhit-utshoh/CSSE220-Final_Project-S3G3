@@ -17,8 +17,8 @@ public class Player extends GameObj{
     public BufferedImage getSprite() {
     	return sprite;
     }
-    public boolean canMove(float timeLeft) {
-        return brain.allowMovement(timeLeft);
+    public boolean canMove() {
+        return brain.allowMovement();
     }
 
     public void checkWallCollision() {

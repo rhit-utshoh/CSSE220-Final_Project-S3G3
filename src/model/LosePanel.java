@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class EndPanel extends JPanel {
+public class LosePanel extends JPanel {
 
     private JLabel title = new JLabel("GAME OVER");
     Color bgColor = new Color(200, 220, 240);
@@ -27,7 +27,7 @@ public class EndPanel extends JPanel {
     Color btnHov = new Color(207, 196, 255);
     Color btnHovBorder = new Color(152, 169, 255);
 
-    public EndPanel() {
+    public LosePanel() {
         setLayout(new BorderLayout());
         setBackground(Color.BLACK);
 
@@ -38,16 +38,16 @@ public class EndPanel extends JPanel {
         centerPanel.setPreferredSize(new Dimension(900, 700));
 
         // Title
-        title.setFont(new Font("Comic Sans MS", Font.BOLD, 40));
+        title = new JLabel("GAME OVER");
+        title.setFont(new Font("Comic Sans MS", Font.BOLD, 80));
         title.setForeground(txtColor1);
         title.setAlignmentY(TOP_ALIGNMENT);
+        title.setAlignmentX(CENTER_ALIGNMENT);
 
         // Add to center panel
         centerPanel.add(Box.createVerticalStrut(16));
         centerPanel.add(title);
         centerPanel.add(Box.createVerticalStrut(24));
-        centerPanel.add(Box.createVerticalGlue());
-//        centerPanel.add(restartButton);
         centerPanel.add(Box.createVerticalGlue());
 
         add(centerPanel, BorderLayout.CENTER);
@@ -66,7 +66,7 @@ public class EndPanel extends JPanel {
 
     private void addSprite(JPanel bottomPanel, String resourcePath) {
         try {
-            BufferedImage img = ImageIO.read(EndPanel.class.getResource(resourcePath));
+            BufferedImage img = ImageIO.read(LosePanel.class.getResource(resourcePath));
             if (img != null) {
                 JLabel sprite = new JLabel(new ImageIcon(img));
                 bottomPanel.add(sprite);

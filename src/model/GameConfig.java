@@ -7,7 +7,7 @@ public class GameConfig {
     public static final int PLAYER_SPEED = 30;
     public static final int TILE_SIZE = 120;
     
-    public static final int TIME_LIMIT = 60;
+    public static final int TIME_LIMIT = 5;
     public static final int NUM_LEVELS = 2;
 
     private GameConfig() {

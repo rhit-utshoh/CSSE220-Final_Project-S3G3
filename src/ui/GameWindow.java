@@ -5,11 +5,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import model.LosePanel;
 import model.StartPanel;
+import model.WinPanel;
 
 public class GameWindow {
 	private JFrame frame;
 	private JPanel cards;
+	private CardLayout c1;
 	
 	public GameWindow() {        
         frame = new JFrame("CSSE220 Final Project - Milestone 3");
@@ -17,12 +20,14 @@ public class GameWindow {
         
         StartPanel startPanel = new StartPanel();
         GameComponent gc = new GameComponent(this);
+        LosePanel lose = new LosePanel();
         
         cards.add(startPanel, "START");
         cards.add(gc, "GAME");
+        cards.add(lose, "LOSE");
         
         frame.setContentPane(cards);
-        CardLayout c1 = (CardLayout) cards.getLayout();
+        c1 = (CardLayout) cards.getLayout();
         c1.show(cards, "START");
         
         startPanel.getStartButton().addActionListener(e -> {
@@ -41,10 +46,12 @@ public class GameWindow {
     }
 	
 	public void winGame(float score) {
-		
+        WinPanel win = new WinPanel(score);
+        cards.add(win, "WIN");
+        c1.show(cards, "WIN");
 	}
 	
 	public void loseGame() {
-		
+		c1.show(cards, "LOSE");
 	}
 }

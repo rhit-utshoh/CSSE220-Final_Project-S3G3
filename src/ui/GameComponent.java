@@ -49,7 +49,7 @@ public class GameComponent extends JComponent {
         // Main timer loop
         timer = new Timer(50, e -> {
         	for (Player p : players) {
-        		if (state == GameState.PLAYING && p.canMove(timeLeft)) {
+        		if (state == GameState.PLAYING && p.canMove()) {
 
         			vx = (right ? speed : 0) - (left ? speed : 0);
                 	vy = (down ? speed : 0) - (up ? speed : 0);
@@ -93,17 +93,24 @@ public class GameComponent extends JComponent {
         	}
         
         
+        // if player makes it to end, remove them
         for (int i = 0; i < players.size(); i++) {
-        	Rectangle endTileSmall = new Rectangle(endTile.getX(), endTile.getY(), endTile.getSize()/2, endTile.getSize()/2);
+        	Rectangle endTileSmall = new Rectangle(endTile.getX(), endTile.getY(), endTile.getSize(), endTile.getSize()/2);
         
-        	if (players.get(i).getBounds().intersects(endTileSmall))
+        	if (players.get(i).getBounds().intersects(endTileSmall)) {
         		players.remove(i);
-//        	 win
-//        	timer.stop();
+        	}
         }
         
+        // if all players have made it to the end, then win
+		if (players.size() == 0) {
+			window.winGame(timeLeft);
+			timer.stop();
+		}
+		
+		// if time runs out, lose
         if (timeLeft <= 0) {
-        	// lose
+        	window.loseGame();
         	timer.stop();
         }
         
